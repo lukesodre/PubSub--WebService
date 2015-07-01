@@ -1,0 +1,113 @@
+﻿@model IEnumerable<Core.Entity.Subscriber>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    <img src="http://placehold.it/150x50&text=Logo" alt="">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">Trabalho Final</a>
+                    </li>
+                    <li>
+                        <a href="#">Lucas Avelino Sodré Santos</a>
+                    </li>
+                    <li>
+                        <a href="#">NUSP 7239086</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Login:</h1>
+                @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form-inline" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <fieldset class="form-group">
+                        <legend>Use um email cadastrado para entrar ou clique em criar conta</legend>
+                        <input type="email" class="form-control " name="email" id="email" placeholder="Email">
+                        <input type="submit" class="btn btn-primary" value="Entrar">
+
+                        <div class="form-group">
+                            @Html.ActionLink("Criar conta", "Create", null, new { @class = "btn btn-success " })
+                        </div>
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+
+    <hr>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <h3>Aqui para efeito de teste é mostrado os usuários cadastrados (Subscribers)</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <table class="table table-striped">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsActive)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsActive)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { email = item.Email }) |
+                            @Html.ActionLink("Details", "Details", new { email = item.Email }) |
+                            @Html.ActionLink("Delete", "Delete", new { email = item.Email })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+</div>
+
+

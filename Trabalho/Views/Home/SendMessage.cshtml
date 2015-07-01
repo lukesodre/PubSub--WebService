@@ -1,0 +1,128 @@
+﻿@model Core.Entity.Publisher
+
+@{
+    ViewBag.Title = "SendMessage";
+}
+
+<div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Home">
+                    <img src="http://placehold.it/150x50&text=Logo" alt="">
+                </a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">Trabalho Final</a>
+                    </li>
+                    <li>
+                        <a href="#">Lucas Avelino Sodré Santos</a>
+                    </li>
+                    <li>
+                        <a href="#">NUSP 7239086</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1>Bem-vindo a sua conta @ViewBag.Subscriber.Name</h1>
+                @using (Html.BeginForm("SendMessage", "Home", FormMethod.Post, new { @class = "form-inline" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+                    <fieldset>
+                        <legend>Aqui é possível enviar uma menssagem ou modificar sua conta</legend>
+                        <div class="form-group">
+                            <h3>
+                                @if (ViewBag.Subscriber.IsActive)
+                                {
+                                    <span>Seu cadastro está ativo </span>
+                                }
+                                else
+                                {
+                                    <span style="color: red">Seu cadastro está inativo </span>
+                                }
+                            </h3>
+                        </div>
+                        <div class="form-group" style="margin-left: 3em;">
+
+                            @if (ViewBag.Subscriber.IsActive)
+                            {
+                                <p>
+                                    @Html.ActionLink("Desativar cadastro", "ToggleSubscription", new { email = ViewBag.Subscriber.Email }, new { @class = "btn btn-danger" })
+                                </p>
+                            }
+                            else
+                            {
+                                <p>
+                                    @Html.ActionLink("Ativar cadastro", "ToggleSubscription", new { email = ViewBag.Subscriber.Email }, new { @class = "btn btn-success" })
+                                </p>
+                            }
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @Html.ActionLink("Editar cadastro", "Edit", new { email = @ViewBag.Subscriber.Email }, new { @class = "btn btn-warning" })
+                                <div class="editor-field">
+                                    @Html.HiddenFor(model => model.SubscriberEmail)
+                                    @Html.ValidationMessageFor(model => model.SubscriberEmail)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="editor-label">
+                            @Html.Label("Digite a mensagem desejada")
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.Message, new { @class = "col-md-10" ,rows= "10"})
+                                    @Html.ValidationMessageFor(model => model.Message)
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    <input class="btn btn-default col-md-10"  type="submit" value="Enviar Menssagem" />
+                                </p>
+                            </div>
+                        </div>
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+
+</div>
+
+<hr />
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

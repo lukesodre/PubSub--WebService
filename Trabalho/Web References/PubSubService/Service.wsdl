@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="AddMessage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="message" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddMessageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddMessageResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddorUpdateSubscriber">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="isActive" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AddorUpdateSubscriberResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddorUpdateSubscriberResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TooggleSubscriberActive">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="TooggleSubscriberActiveResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="TooggleSubscriberActiveResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSubscriberByEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSubscriberByEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSubscriberByEmailResult" type="tns:Subscriber" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Subscriber">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAllMessages">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAllMessagesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllMessagesResult" type="tns:ArrayOfPublisher" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfPublisher">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Publisher" nillable="true" type="tns:Publisher" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Publisher">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PublisherID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubscriberEmail" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Subscriber" type="tns:Subscriber" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetSubscribers">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetSubscribersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSubscribersResult" type="tns:ArrayOfSubscriber" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfSubscriber">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Subscriber" nillable="true" type="tns:Subscriber" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetEmailList">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetEmailListResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEmailListResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetActiveSubscribers">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetActiveSubscribersResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetActiveSubscribersResult" type="tns:ArrayOfSubscriber" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="AddMessageSoapIn">
+    <wsdl:part name="parameters" element="tns:AddMessage" />
+  </wsdl:message>
+  <wsdl:message name="AddMessageSoapOut">
+    <wsdl:part name="parameters" element="tns:AddMessageResponse" />
+  </wsdl:message>
+  <wsdl:message name="AddorUpdateSubscriberSoapIn">
+    <wsdl:part name="parameters" element="tns:AddorUpdateSubscriber" />
+  </wsdl:message>
+  <wsdl:message name="AddorUpdateSubscriberSoapOut">
+    <wsdl:part name="parameters" element="tns:AddorUpdateSubscriberResponse" />
+  </wsdl:message>
+  <wsdl:message name="TooggleSubscriberActiveSoapIn">
+    <wsdl:part name="parameters" element="tns:TooggleSubscriberActive" />
+  </wsdl:message>
+  <wsdl:message name="TooggleSubscriberActiveSoapOut">
+    <wsdl:part name="parameters" element="tns:TooggleSubscriberActiveResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSubscriberByEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSubscriberByEmail" />
+  </wsdl:message>
+  <wsdl:message name="GetSubscriberByEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSubscriberByEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllMessagesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllMessages" />
+  </wsdl:message>
+  <wsdl:message name="GetAllMessagesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllMessagesResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSubscribersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSubscribers" />
+  </wsdl:message>
+  <wsdl:message name="GetSubscribersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSubscribersResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEmailListSoapIn">
+    <wsdl:part name="parameters" element="tns:GetEmailList" />
+  </wsdl:message>
+  <wsdl:message name="GetEmailListSoapOut">
+    <wsdl:part name="parameters" element="tns:GetEmailListResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetActiveSubscribersSoapIn">
+    <wsdl:part name="parameters" element="tns:GetActiveSubscribers" />
+  </wsdl:message>
+  <wsdl:message name="GetActiveSubscribersSoapOut">
+    <wsdl:part name="parameters" element="tns:GetActiveSubscribersResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ServiceSoap">
+    <wsdl:operation name="AddMessage">
+      <wsdl:input message="tns:AddMessageSoapIn" />
+      <wsdl:output message="tns:AddMessageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddorUpdateSubscriber">
+      <wsdl:input message="tns:AddorUpdateSubscriberSoapIn" />
+      <wsdl:output message="tns:AddorUpdateSubscriberSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="TooggleSubscriberActive">
+      <wsdl:input message="tns:TooggleSubscriberActiveSoapIn" />
+      <wsdl:output message="tns:TooggleSubscriberActiveSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriberByEmail">
+      <wsdl:input message="tns:GetSubscriberByEmailSoapIn" />
+      <wsdl:output message="tns:GetSubscriberByEmailSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMessages">
+      <wsdl:input message="tns:GetAllMessagesSoapIn" />
+      <wsdl:output message="tns:GetAllMessagesSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscribers">
+      <wsdl:input message="tns:GetSubscribersSoapIn" />
+      <wsdl:output message="tns:GetSubscribersSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmailList">
+      <wsdl:input message="tns:GetEmailListSoapIn" />
+      <wsdl:output message="tns:GetEmailListSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveSubscribers">
+      <wsdl:input message="tns:GetActiveSubscribersSoapIn" />
+      <wsdl:output message="tns:GetActiveSubscribersSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddMessage">
+      <soap:operation soapAction="http://tempuri.org/AddMessage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddorUpdateSubscriber">
+      <soap:operation soapAction="http://tempuri.org/AddorUpdateSubscriber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TooggleSubscriberActive">
+      <soap:operation soapAction="http://tempuri.org/TooggleSubscriberActive" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriberByEmail">
+      <soap:operation soapAction="http://tempuri.org/GetSubscriberByEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMessages">
+      <soap:operation soapAction="http://tempuri.org/GetAllMessages" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscribers">
+      <soap:operation soapAction="http://tempuri.org/GetSubscribers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmailList">
+      <soap:operation soapAction="http://tempuri.org/GetEmailList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveSubscribers">
+      <soap:operation soapAction="http://tempuri.org/GetActiveSubscribers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="AddMessage">
+      <soap12:operation soapAction="http://tempuri.org/AddMessage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddorUpdateSubscriber">
+      <soap12:operation soapAction="http://tempuri.org/AddorUpdateSubscriber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="TooggleSubscriberActive">
+      <soap12:operation soapAction="http://tempuri.org/TooggleSubscriberActive" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscriberByEmail">
+      <soap12:operation soapAction="http://tempuri.org/GetSubscriberByEmail" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllMessages">
+      <soap12:operation soapAction="http://tempuri.org/GetAllMessages" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSubscribers">
+      <soap12:operation soapAction="http://tempuri.org/GetSubscribers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmailList">
+      <soap12:operation soapAction="http://tempuri.org/GetEmailList" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetActiveSubscribers">
+      <soap12:operation soapAction="http://tempuri.org/GetActiveSubscribers" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service">
+    <wsdl:port name="ServiceSoap" binding="tns:ServiceSoap">
+      <soap:address location="http://localhost:50509/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ServiceSoap12" binding="tns:ServiceSoap12">
+      <soap12:address location="http://localhost:50509/Service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
