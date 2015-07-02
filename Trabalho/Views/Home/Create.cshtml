@@ -19,7 +19,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/Home">
-                    <img src="http://placehold.it/150x50&text=Logo" alt="">
+                    <img src="~/Content/logo_ICMC.jpg" alt="">
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -97,44 +97,6 @@
 
 
 
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-
-    <fieldset>
-        <legend>Subscriber</legend>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsActive)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsActive)
-            @Html.ValidationMessageFor(model => model.IsActive)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
-}
 
 
 @section Scripts {

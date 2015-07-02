@@ -33,6 +33,8 @@ namespace Trabalho.PubSubService {
         
         private System.Threading.SendOrPostCallback AddorUpdateSubscriberOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetMessagesByEmailOperationCompleted;
+        
         private System.Threading.SendOrPostCallback TooggleSubscriberActiveOperationCompleted;
         
         private System.Threading.SendOrPostCallback GetSubscriberByEmailOperationCompleted;
@@ -88,6 +90,9 @@ namespace Trabalho.PubSubService {
         
         /// <remarks/>
         public event AddorUpdateSubscriberCompletedEventHandler AddorUpdateSubscriberCompleted;
+        
+        /// <remarks/>
+        public event GetMessagesByEmailCompletedEventHandler GetMessagesByEmailCompleted;
         
         /// <remarks/>
         public event TooggleSubscriberActiveCompletedEventHandler TooggleSubscriberActiveCompleted;
@@ -168,6 +173,35 @@ namespace Trabalho.PubSubService {
             if ((this.AddorUpdateSubscriberCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.AddorUpdateSubscriberCompleted(this, new AddorUpdateSubscriberCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetMessagesByEmail", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Publisher[] GetMessagesByEmail(string email) {
+            object[] results = this.Invoke("GetMessagesByEmail", new object[] {
+                        email});
+            return ((Publisher[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetMessagesByEmailAsync(string email) {
+            this.GetMessagesByEmailAsync(email, null);
+        }
+        
+        /// <remarks/>
+        public void GetMessagesByEmailAsync(string email, object userState) {
+            if ((this.GetMessagesByEmailOperationCompleted == null)) {
+                this.GetMessagesByEmailOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetMessagesByEmailOperationCompleted);
+            }
+            this.InvokeAsync("GetMessagesByEmail", new object[] {
+                        email}, this.GetMessagesByEmailOperationCompleted, userState);
+        }
+        
+        private void OnGetMessagesByEmailOperationCompleted(object arg) {
+            if ((this.GetMessagesByEmailCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetMessagesByEmailCompleted(this, new GetMessagesByEmailCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -362,51 +396,6 @@ namespace Trabalho.PubSubService {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
-    public partial class Subscriber {
-        
-        private string emailField;
-        
-        private string nameField;
-        
-        private bool isActiveField;
-        
-        /// <remarks/>
-        public string Email {
-            get {
-                return this.emailField;
-            }
-            set {
-                this.emailField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public string Name {
-            get {
-                return this.nameField;
-            }
-            set {
-                this.nameField = value;
-            }
-        }
-        
-        /// <remarks/>
-        public bool IsActive {
-            get {
-                return this.isActiveField;
-            }
-            set {
-                this.isActiveField = value;
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
     public partial class Publisher {
         
         private int publisherIDField;
@@ -459,6 +448,51 @@ namespace Trabalho.PubSubService {
     }
     
     /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.0.30319.34230")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class Subscriber {
+        
+        private string emailField;
+        
+        private string nameField;
+        
+        private bool isActiveField;
+        
+        /// <remarks/>
+        public string Email {
+            get {
+                return this.emailField;
+            }
+            set {
+                this.emailField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string Name {
+            get {
+                return this.nameField;
+            }
+            set {
+                this.nameField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public bool IsActive {
+            get {
+                return this.isActiveField;
+            }
+            set {
+                this.isActiveField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.33440")]
     public delegate void AddMessageCompletedEventHandler(object sender, AddMessageCompletedEventArgs e);
     
@@ -506,6 +540,32 @@ namespace Trabalho.PubSubService {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.33440")]
+    public delegate void GetMessagesByEmailCompletedEventHandler(object sender, GetMessagesByEmailCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.0.30319.33440")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetMessagesByEmailCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetMessagesByEmailCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Publisher[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Publisher[])(this.results[0]));
             }
         }
     }

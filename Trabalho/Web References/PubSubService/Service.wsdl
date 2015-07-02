@@ -33,6 +33,40 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetMessagesByEmail">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="email" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetMessagesByEmailResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetMessagesByEmailResult" type="tns:ArrayOfPublisher" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfPublisher">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Publisher" nillable="true" type="tns:Publisher" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Publisher">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="PublisherID" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="SubscriberEmail" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Subscriber" type="tns:Subscriber" />
+          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Subscriber">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="TooggleSubscriberActive">
         <s:complexType>
           <s:sequence>
@@ -61,13 +95,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="Subscriber">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="IsActive" type="s:boolean" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="GetAllMessages">
         <s:complexType />
       </s:element>
@@ -78,19 +105,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="ArrayOfPublisher">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="unbounded" name="Publisher" nillable="true" type="tns:Publisher" />
-        </s:sequence>
-      </s:complexType>
-      <s:complexType name="Publisher">
-        <s:sequence>
-          <s:element minOccurs="1" maxOccurs="1" name="PublisherID" type="s:int" />
-          <s:element minOccurs="0" maxOccurs="1" name="SubscriberEmail" type="s:string" />
-          <s:element minOccurs="0" maxOccurs="1" name="Subscriber" type="tns:Subscriber" />
-          <s:element minOccurs="0" maxOccurs="1" name="Message" type="s:string" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="GetSubscribers">
         <s:complexType />
       </s:element>
@@ -145,6 +159,12 @@
   <wsdl:message name="AddorUpdateSubscriberSoapOut">
     <wsdl:part name="parameters" element="tns:AddorUpdateSubscriberResponse" />
   </wsdl:message>
+  <wsdl:message name="GetMessagesByEmailSoapIn">
+    <wsdl:part name="parameters" element="tns:GetMessagesByEmail" />
+  </wsdl:message>
+  <wsdl:message name="GetMessagesByEmailSoapOut">
+    <wsdl:part name="parameters" element="tns:GetMessagesByEmailResponse" />
+  </wsdl:message>
   <wsdl:message name="TooggleSubscriberActiveSoapIn">
     <wsdl:part name="parameters" element="tns:TooggleSubscriberActive" />
   </wsdl:message>
@@ -190,6 +210,10 @@
       <wsdl:input message="tns:AddorUpdateSubscriberSoapIn" />
       <wsdl:output message="tns:AddorUpdateSubscriberSoapOut" />
     </wsdl:operation>
+    <wsdl:operation name="GetMessagesByEmail">
+      <wsdl:input message="tns:GetMessagesByEmailSoapIn" />
+      <wsdl:output message="tns:GetMessagesByEmailSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="TooggleSubscriberActive">
       <wsdl:input message="tns:TooggleSubscriberActiveSoapIn" />
       <wsdl:output message="tns:TooggleSubscriberActiveSoapOut" />
@@ -228,6 +252,15 @@
     </wsdl:operation>
     <wsdl:operation name="AddorUpdateSubscriber">
       <soap:operation soapAction="http://tempuri.org/AddorUpdateSubscriber" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesByEmail">
+      <soap:operation soapAction="http://tempuri.org/GetMessagesByEmail" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -303,6 +336,15 @@
     </wsdl:operation>
     <wsdl:operation name="AddorUpdateSubscriber">
       <soap12:operation soapAction="http://tempuri.org/AddorUpdateSubscriber" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMessagesByEmail">
+      <soap12:operation soapAction="http://tempuri.org/GetMessagesByEmail" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
