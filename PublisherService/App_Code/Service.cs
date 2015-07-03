@@ -16,6 +16,8 @@ using System.Net.Mail;
 
 public class Service : System.Web.Services.WebService
 {
+
+    //Informacoes referentes ao envio de email
     MailAddress fromAddress = new MailAddress("usuarioteste.lucas@gmail.com", "Teste");
     // MailAddress toAddress = new MailAddress("to@example.com", "To Name");
     string fromPassword = "testebonitao";
@@ -24,7 +26,7 @@ public class Service : System.Web.Services.WebService
     List<Subscriber> subscribers;
     private DBContext db = new DBContext();
 
-
+    //Construtor da classe
     public Service()
     {
         Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DBContext>());
@@ -36,6 +38,8 @@ public class Service : System.Web.Services.WebService
         //InitializeComponent(); 
     }
 
+
+    //Webservice Metodo: Adiciona uma nova mensagem para ser publicada e publica a mensagem para todos os outros usuários.
     [WebMethod]
     public bool AddMessage(string message, string email)
     {
@@ -63,7 +67,7 @@ public class Service : System.Web.Services.WebService
 
         emails.ToList().ForEach(e => emailsList.Add(new MailAddress(e, subscriber.Name)));
 
-
+        //Envia email 
         #region Send Email
         foreach (var toAddress in emailsList)
         {
@@ -100,6 +104,8 @@ public class Service : System.Web.Services.WebService
         return true;
     }
 
+
+    //Webservice Metodo: Cria ou atualiza um usuário.
     [WebMethod]
     public bool AddorUpdateSubscriber(string name, string email, bool isActive)
     {
@@ -126,7 +132,7 @@ public class Service : System.Web.Services.WebService
         return true;
     }
 
-
+    //Webservice Metodo: 	Retorna todas as mensagens enviadas por um usuário especifico.
     [WebMethod]
     public List<Publisher> GetMessagesByEmail(string email)
     {
@@ -140,7 +146,7 @@ public class Service : System.Web.Services.WebService
         return publisherList;
     }
 
-
+    //Webservice Metodo: Ativa ou desativa o cadastro de um usuário.
     [WebMethod]
     public bool TooggleSubscriberActive(string email)
     {
@@ -157,7 +163,7 @@ public class Service : System.Web.Services.WebService
         return true;
     }
 
-
+    //Webservice Metodo: 	Dado um e-mail retorna um usuário 
     [WebMethod]
     public Subscriber GetSubscriberByEmail(string email)
     {
@@ -167,7 +173,7 @@ public class Service : System.Web.Services.WebService
 
     }
 
-
+    //Webservice Metodo:	Retorna todas as mensagens já enviadas.
     [WebMethod]
     public List<Publisher> GetAllMessages()
     {
@@ -175,6 +181,7 @@ public class Service : System.Web.Services.WebService
         return db.Set<Publisher>().ToList();
     }
 
+    //Webservice Metodo: Retorna todos os usuarios cadastrados
     [WebMethod]
     public List<Subscriber> GetSubscribers()
     {
@@ -182,6 +189,7 @@ public class Service : System.Web.Services.WebService
         return subscribers.ToList();
     }
 
+    //Webservice Metodo: 	Retorna a lista de e-mails de usuários cadastrados.
     [WebMethod]
     public List<string> GetEmailList()
     {
@@ -191,6 +199,7 @@ public class Service : System.Web.Services.WebService
         return emails.ToList();
     }
 
+    //Webservice Metodo: 	Retorna a lista de e-mails de usuários cadastrados que estão ativos.
     [WebMethod]
     public List<Subscriber> GetActiveSubscribers()
     {
